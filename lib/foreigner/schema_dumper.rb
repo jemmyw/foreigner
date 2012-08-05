@@ -21,6 +21,13 @@ module Foreigner
         if foreign_key.options[:dependent].present?
           statement_parts << (':dependent => ' + foreign_key.options[:dependent].inspect)
         end
+        if foreign_key.options[:deferrable]
+          statement_parts << (':deferrable => true')
+
+          if foreign_key.options[:initially_deferred]
+            statement_parts << (':initially_deferred => true')
+          end
+        end
 
         statement_parts.join(', ')
       end
